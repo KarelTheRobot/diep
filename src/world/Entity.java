@@ -3,8 +3,15 @@ package world;
 import java.awt.Graphics;
 
 public abstract class Entity {
-	private int myX, myY, myWidth, myHeight, dx, dy;
+	private int myX, myY, myWidth, myHeight;
+	private double myHealth, dx, dy;
 	//Accessor and modifier methods
+	public double getHealth() {
+		return myHealth;
+	}
+	public void setHealth(double myHealth) {
+		this.myHealth = myHealth;
+	}
 	public int getX() {
 		return myX;
 	}
@@ -17,16 +24,16 @@ public abstract class Entity {
 	public void setY(int myY) {
 		this.myY = myY;
 	}
-	public int getDx() {
+	public double getDx() {
 		return dx;
 	}
-	public void setDx(int dx) {
+	public void setDx(double dx) {
 		this.dx = dx;
 	}
-	public int getDy() {
+	public double getDy() {
 		return dy;
 	}
-	public void setDy(int dy) {
+	public void setDy(double dy) {
 		this.dy = dy;
 	}
 	public int getWidth() {
@@ -41,7 +48,5 @@ public abstract class Entity {
 	public void setHeight(int myHeight) {
 		this.myHeight = myHeight;
 	}
-	
 	public abstract void draw(Graphics myBuffer);
-	
 }
