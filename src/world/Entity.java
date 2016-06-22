@@ -8,7 +8,7 @@ public abstract class Entity {
 	private double myHealth, myDirection, mySpeed;
 	private Color myColor;
 	//Accessor and modifier methods
-	public Entity(double x, double y, double width, double height, double health, double direction, double speed) {
+	public Entity(double x, double y, double width, double height, double health, double direction, double speed, Color color) {
 		myX = x;
 		myY = y;
 		myWidth = width;
@@ -16,6 +16,7 @@ public abstract class Entity {
 		myHealth = health;
 		myDirection = direction;
 		mySpeed = speed;
+		myColor = color;
 	}
 	public Color getColor() {
 		return myColor;
@@ -66,6 +67,7 @@ public abstract class Entity {
 		this.myHeight = height;
 	}
 	public void draw(Graphics myBuffer) {
+		myBuffer.setColor(myColor);
 		myBuffer.fillOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
 	}
 	/**
