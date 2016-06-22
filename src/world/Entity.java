@@ -1,52 +1,81 @@
 package world;
 
+import java.awt.Color;
 import java.awt.Graphics;
-
+import static java.lang.Math.*;
 public abstract class Entity {
-	private int myX, myY, myWidth, myHeight;
-	private double myHealth, dx, dy;
+	private double myX, myY, myWidth, myHeight;
+	private double myHealth, myDirection, mySpeed;
+	private Color myColor;
 	//Accessor and modifier methods
+	public Entity(double x, double y, double width, double height, double health, double direction, double speed) {
+		myX = x;
+		myY = y;
+		myWidth = width;
+		myHeight = height;
+		myHealth = health;
+		myDirection = direction;
+		mySpeed = speed;
+	}
+	public Color getColor() {
+		return myColor;
+	}
+	public void setColor(Color color) {
+		myColor = color;
+	}
 	public double getHealth() {
 		return myHealth;
 	}
 	public void setHealth(double myHealth) {
 		this.myHealth = myHealth;
 	}
-	public int getX() {
+	public double getX() {
 		return myX;
 	}
-	public void setX(int myX) {
+	public void setX(double myX) {
 		this.myX = myX;
 	}
-	public int getY() {
+	public double getY() {
 		return myY;
 	}
-	public void setY(int myY) {
+	public void setY(double myY) {
 		this.myY = myY;
 	}
-	public double getDx() {
-		return dx;
+	public double getDirection() {
+		return myDirection;
 	}
-	public void setDx(double dx) {
-		this.dx = dx;
+	public void setDirection(double direction) {
+		this.myDirection = direction;
 	}
-	public double getDy() {
-		return dy;
+	public double getSpeed() {
+		return mySpeed;
 	}
-	public void setDy(double dy) {
-		this.dy = dy;
+	public void setSpeed(double speed) {
+		this.mySpeed = speed;
 	}
-	public int getWidth() {
+	public double getWidth() {
 		return myWidth;
 	}
-	public void setWidth(int myWidth) {
-		this.myWidth = myWidth;
+	public void setWidth(double width) {
+		this.myWidth = width;
 	}
-	public int getHeight() {
+	public double getHeight() {
 		return myHeight;
 	}
-	public void setHeight(int myHeight) {
-		this.myHeight = myHeight;
+	public void setHeight(double height) {
+		this.myHeight = height;
 	}
-	public abstract void draw(Graphics myBuffer);
+	public void draw(Graphics myBuffer) {
+		myBuffer.fillOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
+	}
+	/**
+	 * Calculates the change in x and y based on direction and speed
+	 * @return an 2-value int[] contaning the horizontal and vertical movement.
+	 */
+	public double[] calcDxDy() {
+		double[] array = new double[2]; //a terrible name for an array
+		array[0] = mySpeed * sin(toRadians(myDirection));
+		array[1] = mySpeed * cos(toRadians(myDirection));
+		return array;
+	}
 }
