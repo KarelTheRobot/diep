@@ -83,7 +83,6 @@ public abstract class Entity {
 			myBuffer.setStroke(DiepConstants.THICK);
 			myBuffer.drawOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
 		}
-		
 	}
 	/**
 	 * Calculates the change in x and y based on direction and speed

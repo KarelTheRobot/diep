@@ -43,5 +43,4 @@ public class DefaultTank extends Tank {
 	    fillGuns(xPoints, yPoints, myBuffer);
 	    outlineGuns(xPoints, yPoints, myBuffer);
 	}
-	
 }
