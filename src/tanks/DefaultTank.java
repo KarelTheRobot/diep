@@ -11,7 +11,6 @@ public class DefaultTank extends Tank {
 	public DefaultTank(double x, double y, double direction) {
 		super(x, y, direction);
 	}
-	
 	public DefaultTank(double x, double y) {
 		super(x, y);
 	}
