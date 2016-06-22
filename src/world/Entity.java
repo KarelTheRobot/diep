@@ -1,12 +1,13 @@
 package world;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+
 import static java.lang.Math.*;
 public abstract class Entity {
 	private double myX, myY, myWidth, myHeight;
 	private double myHealth, myDirection, mySpeed;
 	private Color myColor;
+	private Polygon myPolygon;
 	//Accessor and modifier methods
 	public Entity(double x, double y, double width, double height, double health, double direction, double speed, Color color) {
 		myX = x;
@@ -17,6 +18,7 @@ public abstract class Entity {
 		myDirection = direction;
 		mySpeed = speed;
 		myColor = color;
+		setPolygon(null);
 	}
 	public Color getColor() {
 		return myColor;
@@ -66,9 +68,22 @@ public abstract class Entity {
 	public void setHeight(double height) {
 		this.myHeight = height;
 	}
-	public void draw(Graphics myBuffer) {
-		myBuffer.setColor(myColor);
-		myBuffer.fillOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
+	public Polygon getPolygon() {
+		return myPolygon;
+	}
+	public void setPolygon(Polygon myPolygon) {
+		this.myPolygon = myPolygon;
+	}
+	public void draw(Graphics2D myBuffer) {
+		if (myPolygon == null) {
+			myBuffer.setColor(myColor);
+			myBuffer.setStroke(DiepConstants.THIN);
+			myBuffer.fillOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
+			myBuffer.setColor(DiepConstants.OUTLINECOLOR);
+			myBuffer.setStroke(DiepConstants.THICK);
+			myBuffer.drawOval((int)(getX()-getWidth()/2), (int)(getY()-getHeight()/2), (int)(getWidth()), (int)(getHeight()));
+		}
+		
 	}
 	/**
 	 * Calculates the change in x and y based on direction and speed

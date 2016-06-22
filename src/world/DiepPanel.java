@@ -1,18 +1,17 @@
 package world;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import tanks.*;
 
 public class DiepPanel extends JPanel {
 	private BufferedImage myImage = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-	private Graphics myBuffer = myImage.getGraphics();
+	private Graphics g = myImage.getGraphics();
+	private Graphics2D myBuffer = (Graphics2D)g;
 	public DiepPanel() {
-		myBuffer.setColor(Color.RED);
-		myBuffer.fillRect(0, 0, 800, 600);
-		Entity e = new DefaultTank(300, 300, 0);
+		Entity e = new DefaultTank(300, 300, 90);
 		e.draw(myBuffer);
 		repaint();
 	}

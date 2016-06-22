@@ -2,7 +2,7 @@ package tanks;
 
 import java.awt.*;
 import world.DiepConstants;
-
+import static java.lang.Math.*;
 public class DefaultTank extends Tank {
 	public DefaultTank(double x, double y, double width, double height, double health, double direction, double speed, Color color) {
 		super(x, y, width, height, health, direction, speed, color);
@@ -15,25 +15,33 @@ public class DefaultTank extends Tank {
 	public DefaultTank(double x, double y) {
 		super(x, y);
 	}
-	public void drawGuns(Graphics myBuffer) {
-		int[] x = new int[4];
-		x[0] = (int)(getX()+DiepConstants.GUNWIDTH*Math.sin(Math.toRadians(getDirection()+90)));
-		x[1] = (int)(getX()-DiepConstants.GUNWIDTH*Math.sin(Math.toRadians(getDirection()+90)));
-		x[2] = x[1] + (int)(DiepConstants.GUNLENGTH*Math.sin(Math.toRadians(getDirection()+90)));
-		x[3] = x[0] + (int)(DiepConstants.GUNLENGTH*Math.sin(Math.toRadians(getDirection()+90)));
-		int[] y = new int[4];
-		y[0] = (int)(getY()+DiepConstants.GUNWIDTH*Math.cos(Math.toRadians(getDirection()+90)));
-		y[1] = (int)(getY()-DiepConstants.GUNWIDTH*Math.cos(Math.toRadians(getDirection()+90)));
-		y[2] = y[1] + (int)(DiepConstants.GUNLENGTH*Math.cos(Math.toRadians(getDirection()+90)));
-		y[3] = y[0] + (int)(DiepConstants.GUNLENGTH*Math.cos(Math.toRadians(getDirection()+90)));
-		myBuffer.setColor(Color.GREEN);
-		myBuffer.fillPolygon(x, y, 4);
-		for (int a = 0; a < 4; a++)
-		{
-			System.out.println("("+x[a]+", "+y[a]+")");
-			myBuffer.setColor(Color.BLACK);
-			myBuffer.fillRect(x[a], y[a], 1, 1);
-		}
+	public void drawGuns(Graphics2D myBuffer) {
+		double x = getX();
+		double y = getY();
+		double l = DiepConstants.GUNLENGTH;
+		double w = DiepConstants.GUNWIDTH;
+		double a = toRadians(getDirection());
+		double angle1 = atan(DiepConstants.GUNWIDTH/(2*DiepConstants.GUNLENGTH));
+	    double angle2 = PI/2 - angle1 + a;
+	    double angle3 = PI/2 + angle1 + a;
+	    double length = l/cos(angle1);
+	    int[] xPoints = {
+	    		(int)(x+w*cos(a)/2),
+	    		(int)(x+cos(angle2)*length),
+	    		(int)(x+cos(angle3)*length),
+	    		(int)(x-w*cos(a)/2)
+	    	};
+	    int[] yPoints = {
+	    		(int)(y-w*sin(a)/2),
+	    		(int)(y-sin(angle2)*length),
+	    		(int)(y-sin(angle3)*length),
+	    		(int)(y+w*sin(a)/2)
+	    	};
+		/*myBuffer.fillPolygon(xPoints, yPoints, 4);
+		myBuffer.setColor(DiepConstants.OUTLINECOLOR);
+		myBuffer.drawPolygon(xPoints, yPoints, 4);*/
+	    fillGuns(xPoints, yPoints, myBuffer);
+	    outlineGuns(xPoints, yPoints, myBuffer);
 	}
-
+	
 }
