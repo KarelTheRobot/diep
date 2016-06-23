@@ -4,10 +4,12 @@ import java.awt.*;
 import world.DiepConstants;
 import static java.lang.Math.*;
 public class DefaultTank extends Tank {
-	public DefaultTank(double x, double y, double width, double height, double health, double direction, double speed, Color color) {
-		super(x, y, width, height, health, direction, speed, color);
+	public DefaultTank(double x, double y, double width, double height, double health, double direction, double DX, double DY, Color color) {
+		super(x, y, width, height, health, direction, DX, DY, color);
 	}
-	
+	public DefaultTank(double x, double y, double direction, double DX, double DY) {
+		super(x, y, direction, DX, DY);
+	}
 	public DefaultTank(double x, double y, double direction) {
 		super(x, y, direction);
 	}
