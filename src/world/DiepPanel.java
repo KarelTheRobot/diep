@@ -3,9 +3,10 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import tanks.*;
+import static world.DiepConstants.*;
 
 public class DiepPanel {
-	private static BufferedImage myImage = new BufferedImage(DiepConstants.MAPWIDTH, DiepConstants.MAPHEIGHT, BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage myImage = new BufferedImage(MAPWIDTH, MAPHEIGHT, BufferedImage.TYPE_INT_ARGB);
 	private static Graphics g = myImage.getGraphics();
 	private static Graphics2D myBuffer = (Graphics2D)g;
 	private static ArrayList<Entity> entities;
@@ -14,20 +15,27 @@ public class DiepPanel {
 		entities.add(new DefaultTank(3000, 300, 135, 4, 0));
 	}
 	public static void moveAllEntities() {
-		myBuffer.setColor(DiepConstants.BACKGROUND);
-		myBuffer.fillRect(0, 0,
-				DiepConstants.MAPWIDTH, DiepConstants.MAPHEIGHT);
-		myBuffer.setColor(DiepConstants.BACKGROUNDLINECOLOR);
-		myBuffer.setStroke(DiepConstants.THIN);
-		for (int x = 0; x < DiepConstants.MAPWIDTH; x+=DiepConstants.BACKGROUNDLINESPACING)
-			myBuffer.drawLine(x, 0, x, DiepConstants.MAPHEIGHT);
-		for (int y = 0; y < DiepConstants.MAPHEIGHT; y+= DiepConstants.BACKGROUNDLINESPACING)
-			myBuffer.drawLine(0, y, DiepConstants.MAPWIDTH, y);
+		myBuffer.setColor(BACKGROUND.darker());
+		//fill 4 borders- faster than one huge rectangle
+		myBuffer.fillRect(0, 0, MAPWIDTH, FRAMEHEIGHT/2);
+		myBuffer.fillRect(0, 0, FRAMEWIDTH/2, MAPHEIGHT);
+		myBuffer.fillRect(0, MAPHEIGHT-FRAMEHEIGHT/2, MAPWIDTH, FRAMEHEIGHT/2);
+		myBuffer.fillRect(MAPWIDTH-FRAMEWIDTH/2, 0, FRAMEWIDTH/2, MAPHEIGHT);
+		
+		myBuffer.setColor(BACKGROUND);
+		myBuffer.fillRect(FRAMEWIDTH/2, FRAMEHEIGHT/2,
+				MAPWIDTH-FRAMEWIDTH, MAPHEIGHT-FRAMEHEIGHT);
+		myBuffer.setColor(BACKGROUNDLINECOLOR);
+		myBuffer.setStroke(THIN);
+		for (int x = 0; x < MAPWIDTH; x+=BACKGROUNDLINESPACING)
+			myBuffer.drawLine(x, 0, x, MAPHEIGHT);
+		for (int y = 0; y < MAPHEIGHT; y+= BACKGROUNDLINESPACING)
+			myBuffer.drawLine(0, y, MAPWIDTH, y);
 		for (Entity e : entities) {
 			e.setX(e.getX()+e.getdx());
 			e.setY(e.getY()+e.getdy());
-			e.setdx(e.getdx()*DiepConstants.DECELERATION);
-			e.setdy(e.getdy()*DiepConstants.DECELERATION);
+			e.setdx(e.getdx()*DECELERATION);
+			e.setdy(e.getdy()*DECELERATION);
 		}
 	}
 	public static void drawAllEntities() {
@@ -36,6 +44,7 @@ public class DiepPanel {
 		}
 	}
 	public static BufferedImage getImageCenteredOnPoint(int x, int y, int width, int height) {
+//		System.out.println(x-width/2+" " + (y-height/2)+ " " + width+ " " + height);
 		return myImage.getSubimage(x-width/2, y-height/2, width, height);
 	}
 }
