@@ -32,10 +32,10 @@ public class DiepPanel {
 		for (int y = 0; y < MAPHEIGHT; y+= BACKGROUNDLINESPACING)
 			myBuffer.drawLine(0, y, MAPWIDTH, y);
 		for (Entity e : entities) {
-			e.setX(e.getX()+e.getdx());
-			e.setY(e.getY()+e.getdy());
-			e.setdx(e.getdx()*DECELERATION);
-			e.setdy(e.getdy()*DECELERATION);
+			e.move();
+			if (e instanceof Tank) {
+				((Tank)e).checkBullets();
+			}
 		}
 	}
 	public static void drawAllEntities() {

@@ -5,25 +5,25 @@ import java.awt.*;
 
 public abstract class Entity {
 	private double myX, myY, myWidth, myHeight;
-	private double myHealth, myDirection, dx, dy;
+	private double myHealth, myDirection, dx, dy, myDamage;
 	private Color myColor;
 	private Polygon myPolygon;
 
-	// Accessor and modifier methods
-	public Entity(double x, double y, double width, double height, double health, double direction, double DX,
+	public Entity(double x, double y, double width, double height, double health, double damage, double direction, double DX,
 			double DY, Color color) {
 		myX = x;
 		myY = y;
 		myWidth = width;
 		myHeight = height;
 		myHealth = health;
+		setDamage(damage);
 		myDirection = direction;
 		dx = DX;
 		dy = DY;
 		myColor = color;
 		setPolygon(null);
 	}
-
+	// Accessor and modifier methods
 	public Color getColor() {
 		return myColor;
 	}
@@ -40,6 +40,12 @@ public abstract class Entity {
 		this.myHealth = myHealth;
 	}
 
+	public double getDamage() {
+		return myDamage;
+	}
+	public void setDamage(double myDamage) {
+		this.myDamage = myDamage;
+	}
 	public double getX() {
 		return myX;
 	}
@@ -111,7 +117,7 @@ public abstract class Entity {
 			myBuffer.fillOval((int) (getX() - getWidth() / 2), (int) (getY() - getHeight() / 2), (int) (getWidth()),
 					(int) (getHeight()));
 			myBuffer.setColor(DiepConstants.OUTLINECOLOR);
-			myBuffer.setStroke(DiepConstants.THICK);
+			myBuffer.setStroke(DiepConstants.MEDIUM);
 			myBuffer.drawOval((int) (getX() - getWidth() / 2), (int) (getY() - getHeight() / 2), (int) (getWidth()),
 					(int) (getHeight()));
 		}
@@ -120,8 +126,9 @@ public abstract class Entity {
 			myBuffer.setStroke(DiepConstants.THIN);
 			myBuffer.fillPolygon(myPolygon);
 			myBuffer.setColor(DiepConstants.OUTLINECOLOR);
-			myBuffer.setStroke(DiepConstants.THICK);
+			myBuffer.setStroke(DiepConstants.MEDIUM);
 			myBuffer.drawPolygon(myPolygon);
 		}
 	}
+	public abstract void move();
 }

@@ -38,6 +38,11 @@ public class MainPanel extends JPanel {
 				mouseY = e.getY();
 			}
 		});
+		addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				myTank.fireBullet();
+			}
+		});
 		Timer t = new Timer(1, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkKeys();
